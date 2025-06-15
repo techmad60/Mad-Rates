@@ -8,6 +8,7 @@ interface SplashSlideProps {
   description?: string;
   highlight: string;
   isFirst: boolean;
+  onSwipe: (direction: number) => void;
 }
 
 export default function SplashSlide({
@@ -16,6 +17,7 @@ export default function SplashSlide({
   description,
   highlight,
   isFirst,
+  onSwipe,
 }: SplashSlideProps) {
   return (
     <motion.div
@@ -23,7 +25,13 @@ export default function SplashSlide({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -30 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="flex flex-col items-center justify-center text-white mt-20 relative"
+      className="flex flex-col items-center justify-center text-white mt-20 absolute top-0 left-0 w-full"
+      drag="x"
+      dragConstraints={{ left: 0, right: 0 }}
+      onDragEnd={(e, info) => {
+        if (info.offset.x > 100) onSwipe(-1); // swipe right
+        else if (info.offset.x < -100) onSwipe(1); // swipe left
+      }}
     >
       <Image src={image} alt="Splash Image" width={200} height={200} />
 
@@ -47,5 +55,3 @@ export default function SplashSlide({
     </motion.div>
   );
 }
-// This component is used in the main page to display a splash screen with slides.
-// It uses Framer Motion for animations and Next.js Image component for optimized images.
