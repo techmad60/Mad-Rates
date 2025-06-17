@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { FaPlay } from "react-icons/fa6";
 import { AnimatePresence } from "framer-motion";
@@ -29,7 +29,10 @@ const splashData = [
   },
 ];
 
+
+
 export default function Home() {
+  
   const [activeIndex, setActiveIndex] = useState(0);
 
   const handleSwipe = (dir: number) => {
@@ -39,12 +42,22 @@ export default function Home() {
       setActiveIndex((prev) => prev + 1);
     }
   };
-  console.log(splashData.length);
+  
 
   const current = splashData[activeIndex];
+  useEffect(() => {
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "ArrowRight") handleSwipe(1);
+    if (e.key === "ArrowLeft") handleSwipe(-1);
+  };
+
+  window.addEventListener("keydown", handleKeyDown);
+  return () => window.removeEventListener("keydown", handleKeyDown);
+}, [activeIndex]);
+
 
   return (
-    <div className="relative bg-[#1A0272] min-h-screen p-4 sm:px-8 md:p-12 overflow-hidden">
+    <div className="relative bg-background min-h-screen p-4 sm:px-8 md:p-12 overflow-hidden">
       {/* Skip / Finish Button */}
       <Link
         href="/main"

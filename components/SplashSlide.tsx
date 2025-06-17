@@ -29,8 +29,8 @@ export default function SplashSlide({
       drag="x"
       dragConstraints={{ left: 0, right: 0 }}
       onDragEnd={(e, info) => {
-        if (info.offset.x > 100) onSwipe(-1); // swipe right
-        else if (info.offset.x < -100) onSwipe(1); // swipe left
+        if (info.offset.x > 10) onSwipe(-1); // swipe right
+        else if (info.offset.x < -10) onSwipe(1); // swipe left
       }}
     >
       <Image src={image} alt="Splash Image" width={200} height={200} />
