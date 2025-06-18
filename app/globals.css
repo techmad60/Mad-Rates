@@ -27,6 +27,14 @@ body.light {
   --color-light: #48474A;
   --color-hover: rgba(26, 2, 114, 0.17);
 }
+.scroll-hidden::-webkit-scrollbar {
+  display: none;
+}
+.scroll-hidden {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
 
 
 

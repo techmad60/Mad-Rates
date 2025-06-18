@@ -22,9 +22,9 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex justify-center min-h-screen top-20 z-50 rounded-lg sm:mx-6 md:mx-8 md:top-30 lg:top-10 lg:min-h-0 lg:h-3/4 lg:w-xl lg:left-40 lg:mx-auto">
+    <div className="fixed inset-0 flex justify-center min-h-screen top-20 z-50 rounded-lg pb-16 sm:pb-0  sm:mx-6 md:mx-8 md:top-30 lg:top-10 lg:min-h-0 lg:h-3/4 lg:w-xl lg:left-40 lg:mx-auto">
       <div
-        className="w-full rounded-lg relative p-6 bg-background lg:shadow-lg "
+        className="w-full rounded-lg relative p-6 bg-background lg:shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -33,7 +33,7 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
         >
             <FaXmark />
         </button>
-        {children}
+        <div className="h-full overflow-y-auto scroll-hidden">{children}</div>
       </div>
     </div>
   );
