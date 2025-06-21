@@ -1,5 +1,7 @@
 import { IoMdArrowDropup, IoMdArrowDropdown } from "react-icons/io";
 import MadConverter from "@/components/MadConverter";
+import MadIndex from "@/components/MadIndex";
+import CoinInfoSkeleton from "@/components/CoinInfoSkeleton";
 
 interface CoinData {
   id: string;
@@ -13,6 +15,8 @@ interface CoinData {
     circulating_supply: number;
     total_supply: number | null;
     max_supply: number | null;
+    high_24h: { usd: number };
+    low_24h: { usd: number };
     price_change_percentage_24h: number;
   };
   image: { small: string };
@@ -27,9 +31,19 @@ async function getCoinData(id: string): Promise<CoinData> {
 export default async function CoinInfoPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const coin = await getCoinData(params.id);
+  const { id } = await params;
+
+  let coin: CoinData | null = null;
+
+  try {
+    coin = await getCoinData(id);
+  } catch {}
+
+  if (!coin) {
+    return <CoinInfoSkeleton />;
+  }
 
   const price = coin.market_data.current_price.usd.toLocaleString();
   const priceChange = coin.market_data.price_change_percentage_24h;
@@ -37,8 +51,7 @@ export default async function CoinInfoPage({
 
   return (
     <div className="flex flex-col items-center justify-center mt-32 bg-background p-4 sm:px-6 md:px-0 lg:py-4">
-      <div className="flex flex-col max-w-[74.5rem] xl:max-w-[74rem] w-full font-sans ">
-        {/* Container One */}
+      <div className="flex flex-col max-w-[74.5rem] xl:max-w-[74rem] w-full font-sans">
         <div className="flex flex-col">
           <div className="flex flex-col space-y-1.5">
             <div className="font-sans text-[1.25rem] flex space-x-4 mt-3 items-center">
@@ -110,11 +123,14 @@ export default async function CoinInfoPage({
             </div>
           </div>
         </div>
-        {/* Container Two */}
-        <div>
-          {/* Mad Converter */}
-          <MadConverter coinId={coin.id} coinSymbol={coin.symbol} />
 
+        <div>
+          <MadConverter coinId={coin.id} coinSymbol={coin.symbol} />
+          <MadIndex
+            high24h={coin.market_data.high_24h.usd}
+            low24h={coin.market_data.low_24h.usd}
+            coinSymbol={coin.symbol}
+          />
         </div>
       </div>
     </div>

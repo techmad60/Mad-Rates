@@ -12,6 +12,7 @@
 @theme {
   --font-sans: var(--font-poppins); /* Poppins */
   --font-display: var(--font-braah-one); /* Braah One */
+  --font-poor-story: var(--font-poor-story); /* Poor Story */
   --color-yellow: var(--color-yellow);
   --color-cyan: var(--color-cyan);
   --color-background: var(--color-background);

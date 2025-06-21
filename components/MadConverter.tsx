@@ -36,8 +36,8 @@ export default function MadConverter({ coinId, coinSymbol }: MadConverterProps) 
   }, [coinId, selectedFiat, amount]);
 
   return (
-    <div className="mt-12">
-      <p className="font-semibold text-2xl text-light pb-2 border-b border-hover mb-4">
+    <div className="mt-12 pb-4 lg:flex flex-col items-center justify-center">
+      <p className="font-semibold text-2xl text-light pb-2 mb-4">
         Mad Converter
       </p>
       <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-4 sm:space-y-0">
@@ -45,7 +45,7 @@ export default function MadConverter({ coinId, coinSymbol }: MadConverterProps) 
         <select
           value={selectedFiat}
           onChange={(e) => setSelectedFiat(e.target.value)}
-          className="p-2 rounded border border-yellow bg-background appearance-none text-light focus:outline-none focus:ring-2 focus:ring-yellow"
+          className="p-2 rounded border border-yellow bg-background appearance-none text-light "
         >
           {fiatOptions.map((fiat) => (
             <option key={fiat.code} value={fiat.code}>
