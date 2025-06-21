@@ -1,10 +1,15 @@
-// components/CoinTable.tsx
+"use client";
 import Image from "next/image";
 import { Coin } from "@/types/type";
-
-
+import { useRouter } from "next/navigation";
 
 export default function CoinTable({ coins }: { coins: Coin[] }) {
+  const router = useRouter();
+
+  const handleRowClick = (id: string) => {
+    router.push(`main/coin-info/${id}`);
+  };
+
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full text-left text-light overflow-hidden mt-36 sm:mt-44">
@@ -22,22 +27,23 @@ export default function CoinTable({ coins }: { coins: Coin[] }) {
           {coins.map((coin) => (
             <tr
               key={coin.id}
+              onClick={() => handleRowClick(coin.id)}
               className="border-t border-yellow hover:bg-hover cursor-pointer"
             >
-              <td className="p-4">{coin?.market_cap_rank}</td>
+              <td className="p-4">{coin.market_cap_rank}</td>
               <td className="p-4 flex items-center gap-2">
                 <Image
-                  src={coin?.image}
-                  alt={coin?.name}
+                  src={coin.image}
+                  alt={coin.name}
                   width={24}
                   height={24}
                 />
-                <span>{coin?.name}</span>
+                <span>{coin.name}</span>
                 <span className="text-yellow uppercase text-sm">
-                  ({coin?.symbol})
+                  ({coin.symbol})
                 </span>
               </td>
-              <td className="p-4">${coin?.current_price?.toLocaleString()}</td>
+              <td className="p-4">${coin.current_price.toLocaleString()}</td>
               <td
                 className={`p-4 ${
                   coin.price_change_percentage_1h_in_currency === null || coin.price_change_percentage_1h_in_currency === undefined
@@ -51,7 +57,6 @@ export default function CoinTable({ coins }: { coins: Coin[] }) {
                   ? `${coin.price_change_percentage_1h_in_currency.toFixed(2)}%`
                   : "N/A"}
               </td>
-
               <td
                 className={`p-4 ${
                   coin.price_change_percentage_24h === null
@@ -65,7 +70,6 @@ export default function CoinTable({ coins }: { coins: Coin[] }) {
                   ? `${coin.price_change_percentage_24h.toFixed(2)}%`
                   : "N/A"}
               </td>
-
               <td className="p-4">${coin.market_cap.toLocaleString()}</td>
             </tr>
           ))}
