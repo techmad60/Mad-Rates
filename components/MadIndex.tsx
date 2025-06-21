@@ -83,7 +83,7 @@ export default function MadIndex({
       <div className="relative">
         <IoChatboxSharp className="text-light text-9xl mt-2 absolute left-16" />
         <Image
-          src="/images/madindex.svg"
+          src="/images/madIndex.svg"
           alt="Mad Index Mascot"
           width={100}
           height={100}
